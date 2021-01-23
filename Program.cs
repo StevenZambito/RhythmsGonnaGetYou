@@ -49,7 +49,7 @@ namespace RhythmsGonnaGetYou
 
                 while (userResponse == "ARTISTS" && userHasChosenToGoBackToMenu == false)
                 {
-                    Console.WriteLine("--------------");
+                    Console.WriteLine("-----------------");
                     Console.WriteLine("All Artists");
                     Console.WriteLine("Signed Artists");
                     Console.WriteLine("Unsigned Artists");
@@ -58,7 +58,7 @@ namespace RhythmsGonnaGetYou
                     Console.WriteLine();
                     Console.WriteLine("Back to Main Menu");
                     Console.WriteLine("Quit");
-                    Console.WriteLine("--------------");
+                    Console.WriteLine("-----------------");
 
                     var userArtistsResponse = PromptForString("Which option would you like to choose?");
 
@@ -108,7 +108,7 @@ namespace RhythmsGonnaGetYou
 
                 while (userResponse == "ALBUMS" && userHasChosenToGoBackToMenu == false)
                 {
-                    Console.WriteLine("--------------");
+                    Console.WriteLine("-----------------");
                     Console.WriteLine("All Albums");
                     Console.WriteLine("Albums By Artist");
                     Console.WriteLine("Add Album");
@@ -116,7 +116,7 @@ namespace RhythmsGonnaGetYou
                     Console.WriteLine();
                     Console.WriteLine("Back to Main Menu");
                     Console.WriteLine("Quit");
-                    Console.WriteLine("--------------");
+                    Console.WriteLine("-----------------");
 
                     var userAlbumResponse = PromptForString("Which option would you like to choose?");
 
