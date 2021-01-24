@@ -9,7 +9,7 @@ namespace RhythmsGonnaGetYou
         public bool IsExplicit { get; set; }
         public DateTime ReleaseDate { get; set; }
         public int ArtistId { get; set; }
-        public Artist Artist { get; set; }
+        public Artist TheArtistAssociatedWithAlbumObject { get; set; }
 
     }
 }

@@ -8,6 +8,8 @@ namespace RhythmsGonnaGetYou
         public int TrackNumber { get; set; }
         public string Title { get; set; }
         public DateTime Duration { get; set; }
+        public int AlbumId { get; set; }
+        public Album TheAlbumAssociatedWithSongObject { get; set; }
 
     }
 }
