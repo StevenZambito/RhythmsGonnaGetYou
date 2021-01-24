@@ -1,3 +1,5 @@
+using System;
+
 namespace RhythmsGonnaGetYou
 {
     public class Song
@@ -5,7 +7,7 @@ namespace RhythmsGonnaGetYou
         public int Id { get; set; }
         public int TrackNumber { get; set; }
         public string Title { get; set; }
-        public time Duration { get; set; }
+        public DateTime Duration { get; set; }
 
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 
 namespace RhythmsGonnaGetYou
 {
@@ -26,6 +28,7 @@ namespace RhythmsGonnaGetYou
             var context = new EnigmaRecordsContext();
 
             var Artists = context.Artists;
+            var Albums = context.Albums;
 
             BannerMessage("Enigma Records");
 
@@ -69,12 +72,17 @@ namespace RhythmsGonnaGetYou
                         foreach (var Artist in context.Artists)
                         {
                             Console.WriteLine(Artist.Name);
+                            Console.WriteLine();
                         }
                     }
 
                     if (userArtistsResponse == "SIGNED ARTISTS")
                     {
-
+                        foreach (var Artist in context.Artists)
+                        {
+                            Console.WriteLine(Artist.Name);
+                            Console.WriteLine();
+                        }
                     }
 
                     if (userArtistsResponse == "UNSIGNED ARTISTS")
@@ -122,12 +130,23 @@ namespace RhythmsGonnaGetYou
 
                     if (userAlbumResponse == "ALL ALBUMS")
                     {
-
+                        var albumsInOrder = Albums.OrderBy(album => album.ReleaseDate);
+                        foreach (var album in albumsInOrder.Include(album => album.Artist))
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine(album.Artist.Name);
+                            Console.WriteLine(album.Title);
+                            Console.WriteLine(album.ReleaseDate);
+                            Console.WriteLine();
+                        }
                     }
 
                     if (userAlbumResponse == "ALBUMS BY ARTIST")
                     {
-
+                        foreach (var album in context.Albums.Include(album => album.Artist))
+                        {
+                            // Console.WriteLine()
+                        }
                     }
 
                     if (userAlbumResponse == "ADD ALBUM")
