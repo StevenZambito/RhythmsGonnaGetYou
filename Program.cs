@@ -23,6 +23,7 @@ namespace RhythmsGonnaGetYou
             var userInput = Console.ReadLine().ToUpper().Trim();
             return userInput;
         }
+
         static string PromptForAnswer(string prompt)
         {
             Console.WriteLine(prompt);
@@ -30,10 +31,10 @@ namespace RhythmsGonnaGetYou
             var userInput = Console.ReadLine();
             return userInput;
         }
+
         static void Main(string[] args)
         {
             var context = new EnigmaRecordsContext();
-
             var Artists = context.Artists;
             var Albums = context.Albums;
             var Songs = context.Songs;
@@ -41,7 +42,6 @@ namespace RhythmsGonnaGetYou
             BannerMessage("Enigma Records");
 
             var userHasChosenToQuit = false;
-
             var userHasChosenToGoBackToMenu = false;
 
             while (userHasChosenToQuit == false)
@@ -73,7 +73,6 @@ namespace RhythmsGonnaGetYou
                     Console.WriteLine("-----------------");
 
                     var userArtistsResponse = PromptForString("Which option would you like to choose?");
-
                     Console.WriteLine();
 
                     if (userArtistsResponse == "ALL ARTISTS")
@@ -103,7 +102,6 @@ namespace RhythmsGonnaGetYou
                             Console.WriteLine(artist.Name);
                             Console.WriteLine();
                         }
-
                     }
 
                     if (userArtistsResponse == "SIGN ARTIST")
@@ -127,6 +125,7 @@ namespace RhythmsGonnaGetYou
                             ContactName = contactName,
                             ContactPhoneNumber = contactPhoneNumber
                         };
+
                         context.Artists.Add(newArtist);
                         context.SaveChanges();
 
@@ -141,10 +140,12 @@ namespace RhythmsGonnaGetYou
                         artist.IsSigned = false;
 
                         context.SaveChanges();
+
                         Console.WriteLine();
                         Console.WriteLine($"{nameOfArtistToDrop} has been dropped from Enigma Records.");
 
                     }
+
                     if (userArtistsResponse == "RE-SIGN ARTIST")
                     {
                         var nameOfArtistToSignAgain = PromptForString("What is the name of the dropped artist you would like to Re-Sign?");
@@ -152,6 +153,7 @@ namespace RhythmsGonnaGetYou
                         artist.IsSigned = true;
 
                         context.SaveChanges();
+
                         Console.WriteLine();
                         Console.WriteLine($"{nameOfArtistToSignAgain} has been re-signed to Enigma Records!");
 
@@ -188,6 +190,7 @@ namespace RhythmsGonnaGetYou
                     if (userAlbumResponse == "ALL ALBUMS")
                     {
                         var albumsInOrder = Albums.OrderBy(album => album.ReleaseDate);
+
                         foreach (var album in albumsInOrder.Include(album => album.TheArtistAssociatedWithAlbumObject))
                         {
                             Console.WriteLine();
@@ -202,6 +205,7 @@ namespace RhythmsGonnaGetYou
                     {
                         var artistAnswer = PromptForString("Which Artist's albums would you like to view?");
                         var artistAnswerAlbums = Albums.Include(album => album.TheArtistAssociatedWithAlbumObject);
+
                         foreach (var album in artistAnswerAlbums.Where(album => album.TheArtistAssociatedWithAlbumObject.Name.ToUpper() == artistAnswer))
                         {
                             Console.WriteLine();
@@ -213,7 +217,6 @@ namespace RhythmsGonnaGetYou
 
                     if (userAlbumResponse == "ADD ALBUM")
                     {
-
                         var artistToAddAlbumTo = PromptForString("What is the name of the artist you are adding this album to?");
                         var artist = Artists.Single(artist => artist.Name.ToUpper() == artistToAddAlbumTo);
                         var albumNameToAdd = PromptForAnswer("What is the name of the album you are adding?");
@@ -230,8 +233,8 @@ namespace RhythmsGonnaGetYou
 
                         Albums.Add(newAlbum);
                         context.SaveChanges();
-                        Console.WriteLine($"{albumNameToAdd} has been added to {artistToAddAlbumTo}'s discography.");
 
+                        Console.WriteLine($"{albumNameToAdd} has been added to {artistToAddAlbumTo}'s discography.");
                     }
 
                     if (userAlbumResponse == "ADD SONG")
@@ -243,6 +246,7 @@ namespace RhythmsGonnaGetYou
                         var songDuration = PromptForAnswer($"How long is {songTitleToAdd}? (hh:mm:ss)");
 
                         var checkingTrackNumber = context.Songs.FirstOrDefault(song => song.AlbumId == album.Id && song.TrackNumber == int.Parse(songTrackNumber));
+
                         if (checkingTrackNumber != null)
                         {
                             Console.WriteLine("Track Number is taken, please try again!");
@@ -259,11 +263,10 @@ namespace RhythmsGonnaGetYou
 
                             Songs.Add(newSong);
                             context.SaveChanges();
+
                             Console.WriteLine();
                             Console.WriteLine($"{songTitleToAdd} has been added to {albumName}.");
-
                         }
-
                     }
 
                     if (userAlbumResponse == "BACK TO MAIN MENU")
