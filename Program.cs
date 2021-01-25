@@ -220,9 +220,7 @@ namespace RhythmsGonnaGetYou
                     if (userAlbumResponse == "ALBUMS BY ARTIST")
                     {
                         var artistAlbums = PromptForStringUpper("Which Artist's albums would you like to view?");
-                        var artistAlbumsToView = Albums.Include(album => album.TheArtistAssociatedWithAlbumObject);
-
-                        foreach (var album in artistAlbumsToView.Where(album => album.TheArtistAssociatedWithAlbumObject.Name.ToUpper() == artistAlbums))
+                        foreach (var album in Albums.Where(album => album.TheArtistAssociatedWithAlbumObject.Name.ToUpper() == artistAlbums))
                         {
                             Console.WriteLine();
                             Console.WriteLine(album.Title);
