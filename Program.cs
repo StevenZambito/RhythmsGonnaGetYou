@@ -16,7 +16,7 @@ namespace RhythmsGonnaGetYou
             Console.WriteLine();
         }
 
-        static string PromptForString(string prompt)
+        static string PromptForStringUpper(string prompt)
         {
             Console.WriteLine(prompt);
 
@@ -24,11 +24,27 @@ namespace RhythmsGonnaGetYou
             return userInput;
         }
 
-        static string PromptForAnswer(string prompt)
+        static string PromptForString(string prompt)
         {
             Console.WriteLine(prompt);
 
             var userInput = Console.ReadLine();
+            return userInput;
+        }
+
+        static int PromptForInteger(string prompt)
+        {
+            Console.WriteLine(prompt);
+
+            var userInput = int.Parse(Console.ReadLine());
+            return userInput;
+        }
+
+        static bool PromptForBool(string prompt)
+        {
+            Console.Write(prompt);
+
+            var userInput = bool.Parse(Console.ReadLine());
             return userInput;
         }
 
@@ -54,7 +70,7 @@ namespace RhythmsGonnaGetYou
                 Console.WriteLine("Quit");
                 Console.WriteLine("--------------");
 
-                var userResponse = PromptForString("Which Menu option would you like to choose?");
+                var userResponse = PromptForStringUpper("Which Menu option would you like to choose?");
 
                 userHasChosenToGoBackToMenu = false;
 
@@ -72,7 +88,7 @@ namespace RhythmsGonnaGetYou
                     Console.WriteLine("Quit");
                     Console.WriteLine("-----------------");
 
-                    var userArtistsResponse = PromptForString("Which option would you like to choose?");
+                    var userArtistsResponse = PromptForStringUpper("Which option would you like to choose?");
                     Console.WriteLine();
 
                     if (userArtistsResponse == "ALL ARTISTS")
@@ -106,36 +122,36 @@ namespace RhythmsGonnaGetYou
 
                     if (userArtistsResponse == "SIGN ARTIST")
                     {
-                        var artistName = PromptForAnswer("What is the name of the artist you would like to sign?");
-                        var origin = PromptForAnswer($"What is the country of origin for {artistName}?");
-                        var memberNumber = PromptForAnswer($"How many members does {artistName} consist of?");
-                        var website = PromptForAnswer($"What is {artistName}'s website address?");
-                        var style = PromptForAnswer($"What is {artistName}'s style (genre)?");
-                        var contactName = PromptForAnswer($"What is {artistName}'s contact name?");
-                        var contactPhoneNumber = PromptForAnswer($"What is {artistName}'s phone number? ((xxx)-xxx-xxxx)");
+                        var newName = PromptForString("What is the name of the artist you would like to sign?");
+                        var newCountryOfOrigin = PromptForString($"What is the country of origin for {newName}?");
+                        var newNumberOfMembers = PromptForInteger($"How many members does {newName} consist of?");
+                        var newWebsite = PromptForString($"What is {newName}'s website address?");
+                        var newStyle = PromptForString($"What is {newName}'s style (genre)?");
+                        var newContactName = PromptForString($"What is {newName}'s contact name?");
+                        var newContactPhoneNumber = PromptForString($"What is {newName}'s phone number? ((xxx)-xxx-xxxx)");
 
                         var newArtist = new Artist()
                         {
-                            Name = artistName,
-                            CountryOfOrigin = origin,
-                            NumberOfMembers = int.Parse(memberNumber),
-                            Website = website,
-                            Style = style,
+                            Name = newName,
+                            CountryOfOrigin = newCountryOfOrigin,
+                            NumberOfMembers = newNumberOfMembers,
+                            Website = newWebsite,
+                            Style = newStyle,
                             IsSigned = true,
-                            ContactName = contactName,
-                            ContactPhoneNumber = contactPhoneNumber
+                            ContactName = newContactName,
+                            ContactPhoneNumber = newContactPhoneNumber
                         };
 
                         context.Artists.Add(newArtist);
                         context.SaveChanges();
 
                         Console.WriteLine();
-                        Console.WriteLine($"{artistName} has been signed to Enigma Records!");
+                        Console.WriteLine($"{newName} has been signed to Enigma Records!");
                     }
 
                     if (userArtistsResponse == "DROP ARTIST")
                     {
-                        var nameOfArtistToDrop = PromptForString("What is the name of the artist you would like to drop?");
+                        var nameOfArtistToDrop = PromptForStringUpper("What is the name of the artist you would like to drop?");
                         var artist = Artists.Single(artist => artist.Name.ToUpper() == nameOfArtistToDrop);
                         artist.IsSigned = false;
 
@@ -148,7 +164,7 @@ namespace RhythmsGonnaGetYou
 
                     if (userArtistsResponse == "RE-SIGN ARTIST")
                     {
-                        var nameOfArtistToSignAgain = PromptForString("What is the name of the dropped artist you would like to Re-Sign?");
+                        var nameOfArtistToSignAgain = PromptForStringUpper("What is the name of the dropped artist you would like to Re-Sign?");
                         var artist = Artists.Single(artist => artist.Name.ToUpper() == nameOfArtistToSignAgain);
                         artist.IsSigned = true;
 
@@ -185,7 +201,7 @@ namespace RhythmsGonnaGetYou
                     Console.WriteLine("Quit");
                     Console.WriteLine("-----------------");
 
-                    var userAlbumResponse = PromptForString("Which option would you like to choose?");
+                    var userAlbumResponse = PromptForStringUpper("Which option would you like to choose?");
 
                     if (userAlbumResponse == "ALL ALBUMS")
                     {
@@ -203,10 +219,10 @@ namespace RhythmsGonnaGetYou
 
                     if (userAlbumResponse == "ALBUMS BY ARTIST")
                     {
-                        var artistAnswer = PromptForString("Which Artist's albums would you like to view?");
-                        var artistAnswerAlbums = Albums.Include(album => album.TheArtistAssociatedWithAlbumObject);
+                        var artistAlbums = PromptForStringUpper("Which Artist's albums would you like to view?");
+                        var artistAlbumsToView = Albums.Include(album => album.TheArtistAssociatedWithAlbumObject);
 
-                        foreach (var album in artistAnswerAlbums.Where(album => album.TheArtistAssociatedWithAlbumObject.Name.ToUpper() == artistAnswer))
+                        foreach (var album in artistAlbumsToView.Where(album => album.TheArtistAssociatedWithAlbumObject.Name.ToUpper() == artistAlbums))
                         {
                             Console.WriteLine();
                             Console.WriteLine(album.Title);
@@ -217,35 +233,35 @@ namespace RhythmsGonnaGetYou
 
                     if (userAlbumResponse == "ADD ALBUM")
                     {
-                        var artistToAddAlbumTo = PromptForString("What is the name of the artist you are adding this album to?");
+                        var artistToAddAlbumTo = PromptForStringUpper("What is the name of the artist you are adding this album to?");
                         var artist = Artists.Single(artist => artist.Name.ToUpper() == artistToAddAlbumTo);
-                        var albumNameToAdd = PromptForAnswer("What is the name of the album you are adding?");
-                        var albumIsExplicit = PromptForAnswer("Is the album explicit? True or False?");
-                        var albumReleaseDate = PromptForAnswer("What is the albums release date? (YYYY-DD-MM)");
+                        var newTitle = PromptForString("What is the name of the album you are adding?");
+                        var newIsExplicit = PromptForBool("Is the album explicit? True or False?");
+                        var newReleaseDate = PromptForString("What is the albums release date? (YYYY-DD-MM)");
 
                         var newAlbum = new Album()
                         {
-                            Title = albumNameToAdd,
-                            IsExplicit = bool.Parse(albumIsExplicit),
-                            ReleaseDate = DateTime.Parse(albumReleaseDate),
+                            Title = newTitle,
+                            IsExplicit = newIsExplicit,
+                            ReleaseDate = DateTime.Parse(newReleaseDate),
                             ArtistId = artist.Id
                         };
 
                         Albums.Add(newAlbum);
                         context.SaveChanges();
 
-                        Console.WriteLine($"{albumNameToAdd} has been added to {artistToAddAlbumTo}'s discography.");
+                        Console.WriteLine($"{newTitle} has been added to {artistToAddAlbumTo}'s discography.");
                     }
 
                     if (userAlbumResponse == "ADD SONG")
                     {
-                        var albumName = PromptForString("What is the name of the album you would like to add this song to?");
+                        var albumName = PromptForStringUpper("What is the name of the album you would like to add this song to?");
                         var album = Albums.Single(album => album.Title.ToUpper() == albumName);
-                        var songTitleToAdd = PromptForAnswer($"What is the name of the song you would like to add to {albumName}?");
-                        var songTrackNumber = PromptForAnswer($"What track number is {songTitleToAdd} on the album?");
-                        var songDuration = PromptForAnswer($"How long is {songTitleToAdd}? (hh:mm:ss)");
+                        var newTitle = PromptForString($"What is the name of the song you would like to add to {albumName}?");
+                        var newTrackNumber = PromptForInteger($"What track number is {newTitle} on the album?");
+                        var newDuration = PromptForString($"How long is {newTitle}? (hh:mm:ss)");
 
-                        var checkingTrackNumber = context.Songs.FirstOrDefault(song => song.AlbumId == album.Id && song.TrackNumber == int.Parse(songTrackNumber));
+                        var checkingTrackNumber = context.Songs.FirstOrDefault(song => song.AlbumId == album.Id && song.TrackNumber == newTrackNumber);
 
                         if (checkingTrackNumber != null)
                         {
@@ -255,9 +271,9 @@ namespace RhythmsGonnaGetYou
                         {
                             var newSong = new Song()
                             {
-                                TrackNumber = int.Parse(songTrackNumber),
-                                Title = songTitleToAdd,
-                                Duration = DateTime.Parse(songDuration),
+                                TrackNumber = newTrackNumber,
+                                Title = newTitle,
+                                Duration = DateTime.Parse(newDuration),
                                 AlbumId = album.Id
                             };
 
@@ -265,7 +281,7 @@ namespace RhythmsGonnaGetYou
                             context.SaveChanges();
 
                             Console.WriteLine();
-                            Console.WriteLine($"{songTitleToAdd} has been added to {albumName}.");
+                            Console.WriteLine($"{newTitle} has been added to {albumName}.");
                         }
                     }
 

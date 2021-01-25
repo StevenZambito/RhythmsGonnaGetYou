@@ -10,6 +10,5 @@ namespace RhythmsGonnaGetYou
         public DateTime ReleaseDate { get; set; }
         public int ArtistId { get; set; }
         public Artist TheArtistAssociatedWithAlbumObject { get; set; }
-
     }
 }
